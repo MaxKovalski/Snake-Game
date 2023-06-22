@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>סנייק</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="javascript.js" defer></script>
+  </head>
+
+  <body onload="createBoard()">
+    <h1>סנייק</h1>
+    <div id="level">
+      <button id="easy">easy</button>
+      <button id="normal">normal</button>
+      <button id="hard">hard</button>
+    </div>
+    <div class="frame">
+      <div class="container-data">
+        <input type="range" />
+        <p>Score: <span id="score">0</span></p>
+        <p>:Timer<span id="time"></span></p>
+      </div>
+
+      <div class="board"></div>
+    </div>
+  </body>
+</html>
