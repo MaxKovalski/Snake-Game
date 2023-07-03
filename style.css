@@ -5,9 +5,11 @@ html {
 }
 
 body {
-  direction: rtl;
   background-color: #383838;
   padding-bottom: 200px;
+  background-image: url(./Images/background.jpg);
+  background-repeat: no-repeat;
+  background-position: center -120px;
 }
 
 * {
@@ -38,9 +40,9 @@ h1 {
 .board {
   display: inline-grid;
   border-radius: 3px;
-  border: 4px solid;
+  border: greenyellow 4px solid;
   overflow: hidden;
-  background-color: #464646;
+  /* background-color: #464646; */
 }
 
 .board div {
@@ -48,19 +50,85 @@ h1 {
   height: 12px;
 }
 .snake {
-  background-color: greenyellow;
+  background-color: green;
   border-radius: 10px;
+  width: 12px;
+  height: 12px;
 }
+
 .head {
-  background-color: pink;
+  background-color: yellow;
   border-radius: 10px;
-  width: 13px !important;
-  height: 13px !important;
+  width: 15px;
+  height: 15px;
 }
+
+.snake {
+  animation: snakeScale 0.2s infinite alternate;
+}
+
+@keyframes snakeScale {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+.head:before,
+.head:after {
+  content: "";
+  position: absolute;
+  background-color: black;
+}
+
+.head:before {
+  top: 4px;
+  left: 4px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+}
+
+.head:after {
+  top: 4px;
+  right: 4px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+}
+
+.snake:after {
+  content: "";
+  position: absolute;
+  background-color: #111;
+  border-radius: 50%;
+  width: 4px;
+  height: 4px;
+}
+
+.snake:nth-child(2n):after {
+  top: 3px;
+  left: 2px;
+}
+
+.snake:nth-child(2n + 1):after {
+  bottom: 3px;
+  right: 2px;
+}
+
 .blueberry::after {
   content: "🫐";
   position: relative;
   top: -5px;
-  right: -3px;
+  left: -3px;
+  font-size: 13px;
+}
+.cherry::after {
+  content: "🍒";
+  position: relative;
+  top: -5px;
+  left: -3px;
   font-size: 13px;
 }
