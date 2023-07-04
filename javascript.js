@@ -1,7 +1,9 @@
+// Constant
 const height = 55;
 const width = 60;
-const board = document.querySelector(".board");
-board.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+const rightBorders = [];
+const leftBorders = [];
+// let!
 let snakeInterval;
 let timerInterval;
 let cherryTimeout;
@@ -9,44 +11,64 @@ let direction;
 let snake = [6, 5, 4, 3, 2, 1, 0];
 let head = snake[0];
 let itsGameOver = false;
-const rightBorders = [];
-const leftBorders = [];
-let random;
-let random1;
-const score = document.getElementById("score");
-const easy = document.getElementById("easy");
-const normal = document.getElementById("normal");
-const hard = document.getElementById("hard");
-const level = document.getElementById("level");
-const lives = document.getElementById("lives");
 let liveCounter = 0;
 let points = 0;
 let snakeSpeed = 250;
 let snakeBackToNormal = 250;
 let cherrySpeedUp = 0;
 let seconds;
-
+let randomBerry;
+let randomCherry;
+let eatSound = new Audio("./Sounds/Eat.mp3");
+let gameOverSound = new Audio("./Sounds/GameOver.mp3");
+let soundOnOff = true;
+// Get Elements
+const board = document.querySelector(".board");
+const score = document.getElementById("score");
+const easy = document.getElementById("easy");
+const normal = document.getElementById("normal");
+const hard = document.getElementById("hard");
+const level = document.getElementById("level");
+const lives = document.getElementById("lives");
+const soundId = document.getElementById("soundId");
+function soundCheck() {
+  if (soundOnOff) {
+    eatSound.muted = true;
+    gameOverSound.muted = true;
+    soundOnOff = false;
+    soundId.value = "Sound-Off";
+  } else {
+    soundId.value = "Sound-On";
+    soundId.style.textDecorationThickness = "0.4rem";
+    eatSound.muted = false;
+    gameOverSound.muted = false;
+    soundOnOff = true;
+  }
+}
+// The Board
+board.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+// Left Right Check
 for (let i = 0; i < height; i++) {
   rightBorders.push(i * width - 1);
 }
 for (let i = 1; i <= height; i++) {
   leftBorders.push(i * width);
 }
+// Create Board
 function createBoard() {
   for (let i = 0; i < width * height; i++) {
     const cell = document.createElement("div");
     board.appendChild(cell);
   }
-  color();
-  setRandomBerry();
-  setRandomCherry();
 }
+// Snake Color
 function color() {
   const cells = board.querySelectorAll("div");
   cells.forEach((element) => element.classList.remove("snake", "head"));
   snake.forEach((num) => cells[num].classList.add("snake"));
   cells[head].classList.add("head");
 }
+// Snake Moving && Eating && hits Walls
 function move(dir) {
   if (itsGameOver) {
     return;
@@ -56,7 +78,6 @@ function move(dir) {
     if (direction === "down") {
       return;
     }
-
     head -= width;
     if (!cells[head]) {
       if (liveCounter == 3) {
@@ -69,6 +90,7 @@ function move(dir) {
       head = snake[0];
       color();
       clearInterval(snakeInterval);
+      resetTimer();
       direction = "down";
       return;
     }
@@ -84,11 +106,10 @@ function move(dir) {
       }
       removeLive();
       liveCounter++;
+      direction = "left";
       snake.reverse();
       head = snake[0];
       color();
-      clearInterval(snakeInterval);
-      direction = "left";
       return;
     }
   } else if (dir === "left") {
@@ -103,13 +124,10 @@ function move(dir) {
       }
       removeLive();
       liveCounter++;
-
+      direction = "right";
       snake.reverse();
       head = snake[0];
       color();
-      clearInterval(snakeInterval);
-      direction = "right";
-
       return;
     }
   } else if (dir === "down") {
@@ -124,14 +142,14 @@ function move(dir) {
       }
       removeLive();
       liveCounter++;
+      direction = "up";
       snake.reverse();
       head = snake[0];
       color();
-      clearInterval(snakeInterval);
-      direction = "up";
       return;
     }
   }
+  // if snake colliding
   if (snake.includes(head)) {
     if (liveCounter == 3) {
       gameOver();
@@ -139,16 +157,17 @@ function move(dir) {
     }
     removeLive();
     liveCounter++;
+    direction = "down";
     snake.reverse();
     head = snake[0];
     color();
-    clearInterval(snakeInterval);
-    direction = "up";
     return;
   }
   snake.unshift(head);
   direction = dir;
-  if (random == head) {
+  // When Eating
+  if (randomBerry == head) {
+    eatSound.play();
     scorePointBerry();
     setRandomBerry();
     clearInterval(timerInterval);
@@ -158,8 +177,9 @@ function move(dir) {
     }
     snakeSpeed -= 2;
     snakeBackToNormal -= 2;
-  } else if (random1 == head) {
-    if (points == 701) {
+  } else if (randomCherry == head) {
+    eatSound.play();
+    if (points > 750) {
       cells.forEach((element) => element.classList.remove("cherry"));
       return;
     } else {
@@ -203,28 +223,29 @@ function startAuto() {
 }
 // Random Berry
 function setRandomBerry() {
-  random = Math.floor(Math.random() * (width * height));
+  randomBerry = Math.floor(Math.random() * (width * height));
 
-  if (snake.includes(random)) {
+  if (snake.includes(randomBerry)) {
     setRandomBerry();
   } else {
     const cells = board.querySelectorAll("div");
     cells.forEach((element) => element.classList.remove("blueberry"));
-    cells[random].classList.add("blueberry");
+    cells[randomBerry].classList.add("blueberry");
   }
 }
 // Random Cherry
 function setRandomCherry() {
-  random1 = Math.floor(Math.random() * (width * height));
+  randomCherry = Math.floor(Math.random() * (width * height));
 
-  if (snake.includes(random1)) {
+  if (snake.includes(randomCherry)) {
     setRandomCherry();
   } else {
     const cells = board.querySelectorAll("div");
     cells.forEach((element) => element.classList.remove("cherry"));
-    cells[random1].classList.add("cherry");
+    cells[randomCherry].classList.add("cherry");
   }
 }
+// Fruits Score
 function scorePointBerry() {
   points += 10;
   score.innerHTML = points;
@@ -241,9 +262,13 @@ function scorePointCherry() {
 // live remove
 function removeLive() {
   lives.removeChild(lives.firstElementChild);
+  clearInterval(timerInterval);
+  resetTimer();
+  clearInterval(snakeInterval);
 }
 // Game Over Function
 function gameOver() {
+  gameOverSound.play();
   itsGameOver = true;
   alert("game over");
   location.reload();
@@ -259,12 +284,19 @@ function timeSetting(duration, display) {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
     display.innerHTML = minutes + ":" + seconds;
-    if (--timer == -2) {
+    if (liveCounter == 4) {
       gameOver();
+    }
+    if (--timer == -1) {
+      liveCounter++;
+      removeLive();
+      clearInterval(timerInterval);
+      resetTimer();
       return;
     }
   }, 1000);
 }
+// reset Timer
 function resetTimer() {
   seconds;
   display = document.querySelector("#time");
@@ -272,12 +304,18 @@ function resetTimer() {
 }
 // Difficult Button
 easy.addEventListener("click", () => {
+  color();
+  setRandomBerry();
+  setRandomCherry();
   cherrySpeedUp = 3500;
   (seconds = 45), (display = document.querySelector("#time"));
   timeSetting(seconds, display);
   level.style.display = "none";
 });
 normal.addEventListener("click", () => {
+  color();
+  setRandomBerry();
+  setRandomCherry();
   cherrySpeedUp = 4500;
   (seconds = 30), (display = document.querySelector("#time"));
   timeSetting(seconds, display);
@@ -286,6 +324,9 @@ normal.addEventListener("click", () => {
   removeLive();
 });
 hard.addEventListener("click", () => {
+  color();
+  setRandomBerry();
+  setRandomCherry();
   cherrySpeedUp = 5500;
   (seconds = 10), (display = document.querySelector("#time"));
   timeSetting(seconds, display);

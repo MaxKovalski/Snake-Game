@@ -11,41 +11,81 @@
   </head>
 
   <body onload="createBoard()">
-    <h1>Snake</h1>
     <div id="level">
-      <button id="easy">easy</button>
-      <button id="normal">normal</button>
-      <button id="hard">hard</button>
+      <div class="btn-container">
+      <button class="start-btn"  id="easy">easy</button>
+      <button class="start-btn" id="normal">normal</button>
+      <button class="start-btn" id="hard">hard</button>
     </div>
+    <div class="help">
+      <details>
+        <summary >WHAT BUTTON</summary>
+        <p>
+          The "easy" button sets the game difficulty to easy. <br> You will have 45 seconds to eat. <br> You start with 3 lives
+        </p>
+        <p>
+          The "normal" button sets the game difficulty to normal.<br> You will have 30 seconds to eat.<br> You start with 2 lives.
+        </p>
+        <p>
+          The "hard" button sets the game difficulty to hard.<br> You will have 10 seconds to play.<br> eat start with 1 live.
+        </p>
+      </details>
+      <details>
+        <summary>HOW TO PLAY</summary>
+        <p>
+          - Use the arrow keys to control the snake's movement.<br><br>
+          - Choose a difficulty level by clicking the corresponding button.<br><br>
+          - The timer starts counting down once you begin playing.<br><br>
+          - Eat fruits to increase your score and try to survive as long as possible.<br><br>
+          - Watch out for walls and avoid colliding with the snake's body.<br><br>
+      
+          Good luck and enjoy the game!  <br> <br>
+          <br> <br>
+          GAME RULES:<br><br>
+          - Control the snake using the arrow keys to eat fruits and increase your score. <br><br>
+          - Choose the difficulty level (easy, normal, hard) to set the time limit and starting lives.<br><br>
+          - Lose a life if the snake hits a wall or collides with itself.<br><br>
+          - The game ends if you lose all your lives or the timer reaches zero.<br><br>
+          - Eating berries increases your score by 10 points.<br><br>
+          - Eating cherries increases your score by 20 points and speeds up the snake temporarily.
+
+       
+        
+        </p>
+      </details>
+    </div>
+    </div>
+    <h1>Snake</h1>
+      <div id="lives">
+          <img
+            class="img-live"
+            src="./Images/heart.png"
+            width="25px"
+            height="25px"
+            alt=""
+          />
+          <img
+            class="img-live"
+            src="./Images/heart.png"
+            width="25px"
+            height="25px"
+            alt=""
+          />
+          <img
+            class="img-live"
+            src="./Images/heart.png"
+            width="25px"
+            height="25px"
+            alt=""
+          />
+        </div>
+  
     <div class="frame">
       <div class="container-data">
-        <input type="range" />
-        <p>Timer:<span id="time"></span></p>
-        <p>Score: <span id="score">0</span></p>
-        <p id="lives">
-          Live:
-          <img
-            class="test"
-            src="./Images/heart.png"
-            width="30px"
-            height="30px"
-            alt=""
-          />
-          <img
-            class="test"
-            src="./Images/heart.png"
-            width="30px"
-            height="30px"
-            alt=""
-          />
-          <img
-            class="test"
-            src="./Images/heart.png"
-            width="30px"
-            height="30px"
-            alt=""
-          />
-        </p>
+        <div id="soundDiv" onclick="soundCheck()"><input type="button" id="soundId" value="Sound-On" ></input></div>
+        <h4>Timer:<span id="time">00:00</span></h4>
+        <h4>Score:<span id="score">00</span></h4>
+      
       </div>
 
       <div class="board"></div>
