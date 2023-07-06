@@ -1,6 +1,6 @@
 // Constant
-const height = 55;
-const width = 60;
+const height = 45;
+const width = 55;
 const rightBorders = [];
 const leftBorders = [];
 // let!
@@ -31,20 +31,6 @@ const hard = document.getElementById("hard");
 const level = document.getElementById("level");
 const lives = document.getElementById("lives");
 const soundId = document.getElementById("soundId");
-function soundCheck() {
-  if (soundOnOff) {
-    eatSound.muted = true;
-    gameOverSound.muted = true;
-    soundOnOff = false;
-    soundId.value = "Sound-Off";
-  } else {
-    soundId.value = "Sound-On";
-    soundId.style.textDecorationThickness = "0.4rem";
-    eatSound.muted = false;
-    gameOverSound.muted = false;
-    soundOnOff = true;
-  }
-}
 // The Board
 board.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
 // Left Right Check
@@ -179,7 +165,7 @@ function move(dir) {
     snakeBackToNormal -= 2;
   } else if (randomCherry == head) {
     eatSound.play();
-    if (points > 750) {
+    if (points > 1000) {
       cells.forEach((element) => element.classList.remove("cherry"));
       return;
     } else {
@@ -266,13 +252,7 @@ function removeLive() {
   resetTimer();
   clearInterval(snakeInterval);
 }
-// Game Over Function
-function gameOver() {
-  gameOverSound.play();
-  itsGameOver = true;
-  alert("game over");
-  location.reload();
-}
+
 // Timer Setting
 function timeSetting(duration, display) {
   let timer = duration,
@@ -298,9 +278,33 @@ function timeSetting(duration, display) {
 }
 // reset Timer
 function resetTimer() {
+  clearInterval(timerInterval);
   seconds;
   display = document.querySelector("#time");
   timeSetting(seconds, display);
+}
+// Sound On/Off
+function soundCheck() {
+  if (soundOnOff) {
+    eatSound.muted = true;
+    gameOverSound.muted = true;
+    soundOnOff = false;
+    soundId.value = "Sound-Off";
+  } else {
+    soundId.value = "Sound-On";
+    soundId.style.textDecorationThickness = "0.4rem";
+    eatSound.muted = false;
+    gameOverSound.muted = false;
+    soundOnOff = true;
+  }
+}
+
+// Game Over Function
+function gameOver() {
+  itsGameOver = true;
+  clearInterval(timerInterval);
+  gameOverSound.play();
+  document.getElementById("gameOver").style.display = "flex";
 }
 // Difficult Button
 easy.addEventListener("click", () => {

@@ -200,3 +200,25 @@ input[type="button"] {
   left: -3px;
   font-size: 16px;
 }
+.Game-Over {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  letter-spacing: 4px;
+  display: none;
+}
+.Game-Over button {
+  cursor: pointer;
+  background-color: transparent;
+  border-bottom: 4px inset rgba(0, 0, 0, 0.5);
+  border-left: 4px inset rgba(0, 0, 0, 0.5);
+  border-right: 4px inset rgba(255, 255, 255, 0.5);
+  border-top: 4px inset rgba(255, 255, 255, 0.5);
+}

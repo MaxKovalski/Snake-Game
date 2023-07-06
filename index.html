@@ -2,14 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>סנייק</title>
+    <title>Snake</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <script src="javascript.js" defer></script>
   </head>
-
   <body onload="createBoard()">
     <div id="level">
       <div class="btn-container">
@@ -19,7 +17,7 @@
     </div>
     <div class="help">
       <details>
-        <summary >WHAT BUTTON</summary>
+        <summary >GAME MODES</summary>
         <p>
           The "easy" button sets the game difficulty to easy. <br> You will have 45 seconds to eat. <br> You start with 3 lives
         </p>
@@ -90,5 +88,10 @@
 
       <div class="board"></div>
     </div>
+
+    <div id="gameOver" class="Game-Over">
+      <h4>GAME OVER</h4>
+      <button onclick=" location.reload();">RESTART</button>
+    </div> 
   </body>
 </html>
