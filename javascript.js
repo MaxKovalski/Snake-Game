@@ -339,3 +339,13 @@ hard.addEventListener("click", () => {
   removeLive();
   removeLive();
 });
+if (window.matchMedia("screen and (max-width: 768px)").matches) {
+  while (true) {
+    let confirmGame = confirm(
+      "Game design for desktop can definitely be adapted for phones in the future"
+    );
+    if (!confirmGame) {
+      break;
+    }
+  }
+}

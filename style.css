@@ -187,7 +187,7 @@ input[type="button"] {
   right: 2px;
 }
 .blueberry::after {
-  content: "🫐";
+  content: "🍎";
   position: relative;
   top: -5px;
   left: -3px;
